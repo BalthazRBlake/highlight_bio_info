@@ -5,7 +5,7 @@
         <div class="home">
           {{ userName }}'s Bio
           <br />
-          <BioCard :person="person"> </BioCard>
+          <BioCard :bio="bio"> </BioCard>
         </div>
       </b-col>
     </b-row>
@@ -31,14 +31,15 @@ export default {
       .then(response => {
         this.bio = response.data;
       })
-      .catch(error => {
-        console.log(error.response);
+      .catch(ex => {
+        this.bio = {
+          error: {
+            errorMessage: ex.response.data.errorMessage,
+            errorCode: ex.response.data.errorCode
+          }
+        };
+        //console.log(ex.response);
       });
-  },
-  computed: {
-    person() {
-      return this.bio.person;
-    }
   }
 };
 </script>
