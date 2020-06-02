@@ -1,23 +1,33 @@
 <template>
-  <b-col md>
-    <div>
-      <b-table
-        hover
-        responsive
-        sort-icon-left
-        sticky-header="500px"
-        :items="users"
-        :small="small"
-        :busy="isBusy"
-      >
-        <template v-slot:table-busy>
-          <div class="text-center text-info my-2">
-            <b-spinner class="align-middle"></b-spinner>
-            <strong>Loading...</strong>
-          </div>
-        </template>
-      </b-table>
-    </div>
+  <b-col md="6">
+    <b-table
+      hover
+      responsive
+      sort-icon-left
+      sticky-header="600px"
+      :items="users"
+      :small="small"
+      :busy="isBusy"
+    >
+      <template v-slot:table-busy>
+        <div class="text-center text-info my-2">
+          <b-spinner class="align-middle"></b-spinner>
+          <strong>Loading...</strong>
+        </div>
+      </template>
+      <template v-slot:cell(username)="data">
+        <div>
+          <router-link
+            :to="{
+              name: 'PersonDetails',
+              params: { username: data.item.username }
+            }"
+          >
+            {{ data.item.username }}
+          </router-link>
+        </div>
+      </template>
+    </b-table>
   </b-col>
 </template>
 
@@ -30,7 +40,7 @@ export default {
       users: [],
       small: true,
       offset: 0,
-      size: 5
+      size: 10
     };
   },
   created() {

@@ -12,9 +12,10 @@ const routes = [
     component: Home
   },
   {
-    path: "/details",
+    path: "/details/:username",
     name: "PersonDetails",
-    component: PersonDetails
+    component: PersonDetails,
+    props: true
   }
 ];
 

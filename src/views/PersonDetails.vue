@@ -1,6 +1,6 @@
 <template>
   <b-col md>
-    {{ userName }}'s Bio
+    {{ username }}'s Bio
     <br />
     <BioCard :bio="bio"> </BioCard>
   </b-col>
@@ -11,17 +11,17 @@ import BioService from "@/service/BioService.js";
 import BioCard from "@/components/BioCard.vue";
 
 export default {
+  props: ["username"],
   components: {
     BioCard
   },
   data() {
     return {
-      userName: "fabianhumbertohernandezforero",
       bio: {}
     };
   },
   created() {
-    BioService.getBioByUserName(this.userName)
+    BioService.getBioByUserName(this.username)
       .then(response => {
         this.bio = response.data;
       })
