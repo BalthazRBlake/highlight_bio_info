@@ -4,7 +4,11 @@
       <NavBar />
     </div>
     <br /><br /><br />
-    <router-view />
+    <b-container>
+      <b-row>
+        <router-view />
+      </b-row>
+  </b-container>
   </div>
 </template>
 

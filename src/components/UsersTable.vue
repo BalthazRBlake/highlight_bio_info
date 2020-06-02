@@ -1,9 +1,9 @@
 <template>
   <b-col md>
-    <div class="home">Home</div>
+    <div>Users</div>
   </b-col>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>

@@ -1,13 +1,9 @@
 <template>
-  <b-container>
-    <b-row>
-      <b-col md>
-        {{ userName }}'s Bio
-        <br />
-        <BioCard :bio="bio"> </BioCard>
-      </b-col>
-    </b-row>
-  </b-container>
+  <b-col md>
+    {{ userName }}'s Bio
+    <br />
+    <BioCard :bio="bio"> </BioCard>
+  </b-col>
 </template>
 
 <script>
