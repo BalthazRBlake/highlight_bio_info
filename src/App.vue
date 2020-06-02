@@ -8,7 +8,7 @@
       <b-row>
         <router-view />
       </b-row>
-  </b-container>
+    </b-container>
   </div>
 </template>
 

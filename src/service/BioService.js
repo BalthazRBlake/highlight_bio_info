@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiBio = axios.create({
-  baseURL: "http://localhost:8080/api/bio",
+  baseURL: "http://localhost:8080/api",
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -11,9 +11,9 @@ const apiBio = axios.create({
 
 export default {
   getBioByUserName(userName) {
-    return apiBio.get("/" + userName);
+    return apiBio.get("/bio/" + userName);
   },
   getUsersPaginated(offset, size) {
-    return apiBio.get(offset, size);
+    return apiBio.get("/users/" + offset + "/" + size);
   }
 };

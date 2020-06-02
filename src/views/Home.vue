@@ -1,9 +1,17 @@
 <template>
   <b-col md>
-    <div class="home">Home</div>
+    <div class="home">
+      <UsersTable></UsersTable>
+    </div>
   </b-col>
 </template>
 
 <script>
-export default {};
+import UsersTable from "@/components/UsersTable.vue";
+
+export default {
+  components: {
+    UsersTable
+  }
+};
 </script>
