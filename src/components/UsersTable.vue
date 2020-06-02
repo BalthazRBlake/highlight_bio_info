@@ -1,45 +1,63 @@
 <template>
-  <b-col md="6">
-    <div class="overflow-auto">
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="size"
-        aria-controls="my-table"
-        pills
-        size="sm"
-      ></b-pagination>
+  <b-row>
+    <b-col md="6">
+      <div class="overflow-auto">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="size"
+          aria-controls="my-table"
+          pills
+          size="sm"
+        ></b-pagination>
 
-      <b-table
-        hover
-        responsive
-        sort-icon-left
-        sticky-header="600px"
-        :items="users"
-        :small="small"
-        :busy="isBusy"
-      >
-        <template v-slot:table-busy>
-          <div class="text-center text-info my-2">
-            <b-spinner class="align-middle"></b-spinner>
-            <strong>Loading...</strong>
-          </div>
-        </template>
-        <template v-slot:cell(username)="data">
-          <div>
-            <router-link
-              :to="{
-                name: 'PersonDetails',
-                params: { username: data.item.username }
-              }"
-            >
-              {{ data.item.username }}
-            </router-link>
-          </div>
-        </template>
-      </b-table>
-    </div>
-  </b-col>
+        <b-table
+          hover
+          responsive
+          sort-icon-left
+          sticky-header="600px"
+          :items="users"
+          :small="small"
+          :busy="isBusy"
+        >
+          <template v-slot:table-busy>
+            <div class="text-center text-info my-2">
+              <b-spinner class="align-middle"></b-spinner>
+              <strong>Loading...</strong>
+            </div>
+          </template>
+          <template v-slot:cell(username)="data">
+            <div>
+              <router-link
+                :to="{
+                  name: 'PersonDetails',
+                  params: { username: data.item.username }
+                }"
+              >
+                {{ data.item.username }}
+              </router-link>
+            </div>
+          </template>
+        </b-table>
+      </div>
+    </b-col>
+
+    <b-col md="6">
+      <b-form @submit.prevent="filter(searchName)" inline>
+        <b-input-group prepend="@" class="mb-2 mr-sm-2 mb-sm-0">
+          <b-input v-model="searchName" placeholder="Name"></b-input>
+        </b-input-group>
+
+        <b-button
+          variant="primary"
+          @click="filter(searchName)"
+          :disabled="isReady"
+        >
+          Filter
+        </b-button>
+      </b-form>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -53,7 +71,8 @@ export default {
       small: true,
       currentPage: 1,
       size: 15,
-      rows: 1
+      rows: 1,
+      searchName: ""
     };
   },
   created() {
@@ -68,6 +87,9 @@ export default {
     },
     offset() {
       return this.currentPage;
+    },
+    isReady() {
+      return this.searchName.length === 0 ? true : false;
     }
   },
   methods: {
@@ -81,6 +103,10 @@ export default {
         .catch(error => {
           console.log(error.response);
         });
+    },
+    filter(searchName) {
+      this.name = searchName;
+      this.searchName = "";
     }
   }
 };
