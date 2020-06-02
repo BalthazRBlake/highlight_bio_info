@@ -13,7 +13,7 @@ export default {
   getBioByUserName(userName) {
     return apiBio.get("/bio/" + userName);
   },
-  getUsersPaginated(offset, size) {
-    return apiBio.get("/users/" + (offset - 1) + "/" + size);
+  getUsersPaginated(offset, size, name) {
+    return apiBio.get("/users/" + (offset - 1) + "/" + size + "/" + name);
   }
 };

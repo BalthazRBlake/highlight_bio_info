@@ -2,13 +2,11 @@
   <b-col md="6">
     <div class="overflow-auto">
       <b-pagination
-        v-model="offset"
+        v-model="currentPage"
         :total-rows="rows"
         :per-page="size"
         aria-controls="my-table"
       ></b-pagination>
-
-      <p class="mt-3">Current Page: {{ offset }}</p>
 
       <b-table
         hover
@@ -49,25 +47,38 @@ export default {
   data() {
     return {
       users: [],
+      name: "*",
       small: true,
-      offset: 1,
+      currentPage: 1,
       size: 15,
       rows: 1
     };
   },
   created() {
-    BioService.getUsersPaginated(this.offset, this.size)
-      .then(response => {
-        this.users = response.data.results;
-        this.rows = response.data.total;
-      })
-      .catch(error => {
-        console.log(error.response);
-      });
+    this.refreshTable();
+  },
+  beforeUpdate() {
+    this.refreshTable();
   },
   computed: {
     isBusy() {
       return this.users.length === 0 ? true : false;
+    },
+    offset() {
+      return this.currentPage;
+    }
+  },
+  methods: {
+    refreshTable() {
+      BioService.getUsersPaginated(this.offset, this.size, this.name)
+        .then(response => {
+          this.users = [];
+          this.users = response.data.results;
+          this.rows = response.data.total;
+        })
+        .catch(error => {
+          console.log(error.response);
+        });
     }
   }
 };
