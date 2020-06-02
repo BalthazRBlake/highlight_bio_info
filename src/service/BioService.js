@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiDepartment = axios.create({
+const apiBio = axios.create({
   baseURL: "http://localhost:8080/api/bio",
   withCredentials: false,
   headers: {
@@ -11,6 +11,9 @@ const apiDepartment = axios.create({
 
 export default {
   getBioByUserName(userName) {
-    return apiDepartment.get("/" + userName);
+    return apiBio.get("/" + userName);
+  },
+  getUsersPaginated(offset, size) {
+    return apiBio.get(offset, size);
   }
 };
