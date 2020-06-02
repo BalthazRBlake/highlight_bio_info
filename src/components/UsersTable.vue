@@ -6,6 +6,8 @@
         :total-rows="rows"
         :per-page="size"
         aria-controls="my-table"
+        pills
+        size="sm"
       ></b-pagination>
 
       <b-table
