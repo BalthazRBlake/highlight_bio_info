@@ -1,33 +1,44 @@
 <template>
   <b-col md="6">
-    <b-table
-      hover
-      responsive
-      sort-icon-left
-      sticky-header="600px"
-      :items="users"
-      :small="small"
-      :busy="isBusy"
-    >
-      <template v-slot:table-busy>
-        <div class="text-center text-info my-2">
-          <b-spinner class="align-middle"></b-spinner>
-          <strong>Loading...</strong>
-        </div>
-      </template>
-      <template v-slot:cell(username)="data">
-        <div>
-          <router-link
-            :to="{
-              name: 'PersonDetails',
-              params: { username: data.item.username }
-            }"
-          >
-            {{ data.item.username }}
-          </router-link>
-        </div>
-      </template>
-    </b-table>
+    <div class="overflow-auto">
+      <b-pagination
+        v-model="offset"
+        :total-rows="rows"
+        :per-page="size"
+        aria-controls="my-table"
+      ></b-pagination>
+
+      <p class="mt-3">Current Page: {{ offset }}</p>
+
+      <b-table
+        hover
+        responsive
+        sort-icon-left
+        sticky-header="600px"
+        :items="users"
+        :small="small"
+        :busy="isBusy"
+      >
+        <template v-slot:table-busy>
+          <div class="text-center text-info my-2">
+            <b-spinner class="align-middle"></b-spinner>
+            <strong>Loading...</strong>
+          </div>
+        </template>
+        <template v-slot:cell(username)="data">
+          <div>
+            <router-link
+              :to="{
+                name: 'PersonDetails',
+                params: { username: data.item.username }
+              }"
+            >
+              {{ data.item.username }}
+            </router-link>
+          </div>
+        </template>
+      </b-table>
+    </div>
   </b-col>
 </template>
 
@@ -39,14 +50,16 @@ export default {
     return {
       users: [],
       small: true,
-      offset: 0,
-      size: 10
+      offset: 1,
+      size: 15,
+      rows: 1
     };
   },
   created() {
     BioService.getUsersPaginated(this.offset, this.size)
       .then(response => {
         this.users = response.data.results;
+        this.rows = response.data.total;
       })
       .catch(error => {
         console.log(error.response);
